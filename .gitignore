@@ -1,0 +1,3 @@
+# Packaged copy of site/ produced for upload — regenerate with:
+#   cd site && zip -X ../abhiram-website.zip *.html *.css *.js
+abhiram-website.zip
