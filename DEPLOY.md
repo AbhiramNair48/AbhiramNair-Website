@@ -13,6 +13,63 @@ the files are served exactly as they are.
 
 ---
 
+## First: getting SSH to work at all
+
+If `ssh abhiram@linux.cs.utexas.edu` fails with **`Permission denied (publickey)`**,
+nothing is wrong with your password — the server never asked for it. Since
+12 April 2019 UTCS has disabled SSH password authentication for connections
+coming from outside their networks, so the server accepts *keys only*. See
+<https://www.cs.utexas.edu/facilities/documentation/ssh-keys>.
+
+You can confirm that is what's happening:
+
+```bash
+ssh -v abhiram@linux.cs.utexas.edu 2>&1 | grep -i "authentications that can continue"
+```
+
+If it prints only `publickey`, the server is refusing passwords. If it also lists
+`password`, the problem is something else.
+
+### The catch
+
+Registering a key requires logging in, and password login only works from
+*inside* UT's networks. So you have to get inside once, by any of:
+
+- **UT campus Wi-Fi** — simplest if you're on campus
+- **UT VPN** — simplest from home
+  (<https://wikis.utexas.edu/display/cnsoitpublic/Connecting+to+the+UT+VPN>)
+- **A physical CS lab machine**
+
+### Set up the key
+
+Run step 1 on your own computer. For step 2 you must be on campus Wi-Fi or the
+UT VPN.
+
+```bash
+# 1. Create a key pair. Choose a passphrase — not your CS password.
+ssh-keygen -t rsa -b 4096
+
+# 2. Now on campus Wi-Fi or UT VPN, register the public key.
+#    macOS / Linux:
+ssh-copy-id abhiram@linux.cs.utexas.edu
+
+#    Windows (cmd), or if ssh-copy-id is unavailable:
+type .ssh\id_rsa.pub | ssh abhiram@linux.cs.utexas.edu "umask 0077 && mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+```
+
+It will prompt for your CS password this one time. Afterwards `ssh` and `scp`
+work from anywhere, no VPN needed. Registering the key on
+`linux.cs.utexas.edu` propagates it to every machine on the CS network.
+
+Only `id_rsa.pub` — the `.pub` file — ever leaves your machine. Never send
+anyone `id_rsa`, the file without the extension.
+
+> **Shortcut:** if you only want the site live right now and you're already on
+> campus Wi-Fi or the VPN, skip the key entirely. Password authentication works
+> from inside, so go straight to Option A or B below.
+
+---
+
 ## Option A — clone straight onto the UTCS machine (recommended)
 
 Fewest moving parts: the files never touch your laptop.
