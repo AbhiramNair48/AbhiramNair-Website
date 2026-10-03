@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects &mdash; Abhiram Nair</title>
+<meta name="description" content="Selected software and embedded systems projects by Abhiram Nair, a Computer Science student at UT Austin.">
+<meta name="author" content="Abhiram Nair">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23bf5700'/><text x='16' y='22' font-family='Helvetica,Arial,sans-serif' font-size='15' font-weight='bold' fill='white' text-anchor='middle'>AN</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">AN</span>
+      <span>Abhiram Nair</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="resume.html">Resume</a>
+      <button class="theme-toggle" type="button" hidden aria-label="Switch theme"></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Projects</span>
+      <h1>Things I have built</h1>
+      <p class="lead">
+        A selection rather than an inventory &mdash; the projects that taught me the most or
+        that other people actually used. Source for most of the personal work lives on
+        <a href="https://github.com/AbhiramNair48" rel="me noopener">GitHub</a>.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="projects">
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Capsule Closet</h3>
+            <span class="project-when">2024 &ndash; 2025</span>
+          </div>
+          <span class="project-role">Team of four &middot; technical lead</span>
+          <p>
+            A full-stack web app and mobile concept that catalogs a user&rsquo;s wardrobe and
+            generates daily outfit suggestions. Google Gemini identifies and tags clothing from
+            photographs; OpenAI&rsquo;s models assemble outfits against the user&rsquo;s
+            preferences, calendar events, and local weather; Imagen renders a preview of the
+            result. It also lets friends lend and borrow pieces from each other &mdash; the point
+            being to reduce what people buy and throw away. Built over four months and roughly
+            100 hours in the Code2College AI program, then carried into my entrepreneurship
+            course, where we gathered over 100 survey responses on pricing and prototype
+            feedback before deciding how to develop it further.
+          </p>
+          <ul class="tags">
+            <li>OpenAI API</li><li>Google Gemini</li><li>Imagen</li>
+            <li>JavaScript</li><li>Python</li><li>Full-stack</li>
+          </ul>
+          <span class="badge">People&rsquo;s Favorite AI Project Award, 2025</span>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>DevTools vehicle simulation</h3>
+            <span class="project-when">2024 &ndash; 2026</span>
+          </div>
+          <span class="project-role">Polaris Inc. &middot; Software Engineering Intern</span>
+          <p>
+            Internal tooling that lets Polaris developers test infotainment software against a
+            mock vehicle rather than a physical one, which removes a real bottleneck: there are
+            far more engineers than there are vehicles to borrow. My work went into the D-Bus
+            layer that publishes simulated vehicle signals so the infotainment stack behaves as
+            if a real machine were attached, written in C++, QML, JavaScript, and CSHTML. I also
+            helped start a multi-year effort using a rules engine to make data collection,
+            storage, and transformation cheaper across the organization.
+          </p>
+          <ul class="tags">
+            <li>C++</li><li>QML</li><li>D-Bus</li>
+            <li>JavaScript</li><li>InRule</li><li>Linux</li>
+          </ul>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Hardware memory game</h3>
+            <span class="project-when">Sep 2025</span>
+          </div>
+          <span class="project-role">Cirrus Logic hackathon &middot; led a team of five</span>
+          <p>
+            A physical Simon-style memory game built in a single hackathon. A Raspberry Pi 4
+            drives a 4&times;4 grid of illuminated buttons and a speaker, generating sequences
+            that get longer as the player survives them, with audio feedback on each press.
+            Python throughout, reading button state and driving the LEDs over GPIO. My job was
+            as much decomposition as code: splitting the build into independent pieces the five
+            of us could work on in parallel without blocking each other.
+          </p>
+          <ul class="tags">
+            <li>Python</li><li>Raspberry Pi 4</li>
+            <li>GPIO</li><li>Audio I/O</li>
+          </ul>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Workout form tracker</h3>
+            <span class="project-when">Mar 2025</span>
+          </div>
+          <span class="project-role">RRISD hackathon &middot; led a team of four</span>
+          <p>
+            A browser application that watches a user exercise through their webcam and tells
+            them, in real time, when their form has broken down. Built on Google Teachable
+            Machine with a model trained on correct and incorrect repetitions. Nine hours from
+            empty repository to working prototype and pitch, which placed third against more
+            than thirty teams.
+          </p>
+          <ul class="tags">
+            <li>Teachable Machine</li><li>JavaScript</li>
+            <li>Computer vision</li><li>HTML / CSS</li>
+          </ul>
+          <span class="badge">3rd place of 30+ teams</span>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Employee Management System</h3>
+            <span class="project-when">2025</span>
+          </div>
+          <span class="project-role">IB Computer Science HL &middot; solo</span>
+          <p>
+            A desktop application in Java that I extended continuously over the course as I
+            learned new concepts, which makes it the best record I have of my own progress.
+            It persists state between sessions, calculates wages automatically from logged
+            hours and pay rules, and presents separate manager and employee dashboards with
+            different permissions behind each.
+          </p>
+          <ul class="tags">
+            <li>Java</li><li>OOP</li>
+            <li>State persistence</li><li>GUI</li>
+          </ul>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Vehicle dashboard GUI</h3>
+            <span class="project-when">2023</span>
+          </div>
+          <span class="project-role">Code2College Embedded Systems &middot; solo</span>
+          <p>
+            An instrument cluster running on a Raspberry Pi: a C++ and Qt Creator interface
+            wired through the GPIO header to physical circuits I built myself, so that real
+            switches and sensors changed what the display showed. My first project where the
+            software had a body, and the one that pointed me toward embedded work.
+          </p>
+          <ul class="tags">
+            <li>C++</li><li>Qt Creator</li>
+            <li>Raspberry Pi</li><li>GPIO wiring</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Also built</span>
+        <h2>Earlier work</h2>
+        <p>Smaller projects, mostly from learning programs, kept here for the record.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>Zumo robot navigation</h3>
+          <p>
+            Programmed a Zumo robot in MicroPython to run a custom obstacle course, leading a
+            team of seven and presenting the build to a panel of six judges. Third place at the
+            2024 Cirrus Logic robotics hackathon.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Banking application</h3>
+          <p>
+            Python and SQL command-line banking app &mdash; balances, deposits, withdrawals &mdash;
+            built in the Code2College Elite program as the capstone for learning Git, ticketing,
+            source control, and basic software testing.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Tkinter inventory application</h3>
+          <p>
+            An end-to-end standalone desktop app with a Tkinter front end over a MySQL database,
+            written as the final project of a one-on-one Python course. My first program with a
+            real persistence layer.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Python Turtle artwork</h3>
+          <p>
+            A thousand-plus lines of Turtle graphics producing a single detailed drawing. Not
+            useful software, but the project that made loops and coordinates click for me.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="https://github.com/AbhiramNair48" rel="me noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/abhiram-nair-656b05310/" rel="me noopener">LinkedIn</a>
+      </div>
+      <p class="footer-note">&copy; 2026 Abhiram Nair &middot; Hosted on the UTCS web server</p>
+    </div>
+    <p class="footer-note">Last updated October 2026</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
