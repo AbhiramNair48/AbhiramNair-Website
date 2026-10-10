@@ -87,6 +87,10 @@ git checkout claude/charming-heisenberg-fker60
 # 3. Copy the site into your public web directory
 cp site/index.html site/about.html site/projects.html \
    site/resume.html site/style.css site/main.js ~/public_html/
+
+# 4. The Think Faire page lives in its own subdirectory
+mkdir -p ~/public_html/thinklab
+cp site/thinklab/index.html ~/public_html/thinklab/
 ```
 
 To publish updates later, just `git pull` and re-run the `cp`.
@@ -104,6 +108,9 @@ git checkout claude/charming-heisenberg-fker60
 scp site/index.html site/about.html site/projects.html \
     site/resume.html site/style.css site/main.js \
     abhiram@linux.cs.utexas.edu:~/public_html/
+
+# -r recurses, so this creates ~/public_html/thinklab/ with index.html inside
+scp -r site/thinklab abhiram@linux.cs.utexas.edu:~/public_html/
 ```
 
 ---
@@ -126,6 +133,12 @@ chmod 755 ~/public_html
 
 # Every published file must be world-readable.
 chmod 644 ~/public_html/*.html ~/public_html/*.css ~/public_html/*.js
+
+# The thinklab subdirectory needs the same treatment: searchable directory,
+# readable file. A directory must be o+x or the server cannot descend into it,
+# even when the file inside it is world-readable.
+chmod 755 ~/public_html/thinklab
+chmod 644 ~/public_html/thinklab/index.html
 ```
 
 Confirm it looks right:
@@ -140,6 +153,7 @@ You want to see:
 ```
 drwx--x--x   /u/abhiram            <- owner full, others execute only
 drwxr-xr-x   /u/abhiram/public_html
+drwxr-xr-x   thinklab              <- the subdirectory, searchable by others
 -rw-r--r--   index.html  about.html  projects.html  resume.html  style.css  main.js
 ```
 
@@ -156,6 +170,17 @@ wrong, so test the way a stranger would:
 
 ```bash
 curl -I https://www.cs.utexas.edu/~abhiram/
+curl -I https://www.cs.utexas.edu/~abhiram/thinklab/
+curl -I https://www.cs.utexas.edu/~abhiram/thinklab/index.html
+```
+
+All three should answer `200`. The last two must return the *same* page — compare
+them byte for byte:
+
+```bash
+diff <(curl -s https://www.cs.utexas.edu/~abhiram/thinklab/) \
+     <(curl -s https://www.cs.utexas.edu/~abhiram/thinklab/index.html) \
+  && echo "identical"
 ```
 
 `HTTP/1.1 200 OK` (or `HTTP/2 200`) means you're live. Then open the URL on your
@@ -170,10 +195,63 @@ cellular. Click through all four pages and confirm the styling loads.
 | `404 Not Found` | File isn't where the server looks, or is misnamed | It must be `~/public_html/index.html`, lowercase, `.html` not `.htm` |
 | Page loads but unstyled | `style.css` missing or not world-readable | `chmod 644 ~/public_html/style.css` |
 | Trailing-slash URL fails | Directory not searchable | `chmod 755 ~/public_html` |
+| `/thinklab/` gives 403 but `/thinklab/index.html` works | Directory missing `o+x` | `chmod 755 ~/public_html/thinklab` |
+| `/thinklab/` lists files instead of showing the page | `index.html` missing or misnamed in that directory | Check `ls ~/public_html/thinklab` |
 
 A link to your homepage is also added automatically to your UNIX group's master
 page by a nightly batch job. That's cosmetic — your page is reachable as soon as
 the permissions are right, without waiting for it.
+
+---
+
+## How a file's location becomes its URL
+
+This is the part worth actually understanding, and it's the whole point of
+putting the second page in a subdirectory.
+
+```
+     /u/abhiram/public_html/thinklab/index.html      <- where the file sits
+     |________| |_________| |______| |________|
+          |          |          |         |
+          v          v          v         v
+https://www.cs.utexas.edu/~abhiram/thinklab/         <- how the world asks for it
+```
+
+**Why `public_html` never appears in the URL.** Apache's UserDir module is
+configured so that a leading `~username` in a path means "serve from that user's
+`public_html`". So `/~abhiram/` *is* `/u/abhiram/public_html/`. It acts as the
+document root for your personal web space, and a document root is never itself
+part of a URL — it's the thing paths are measured *from*. That's also a security
+boundary: because the mapping starts at `public_html`, there is no URL that
+reaches your home directory above it.
+
+Everything after that prefix is appended to the directory path literally, which
+is why creating a directory called `thinklab` is all it takes to create the URL
+`/~abhiram/thinklab/`. The filesystem layout *is* the URL layout.
+
+**Why `/thinklab/` and `/thinklab/index.html` show the same page.** When a URL
+names a directory rather than a file, Apache has to decide what to send. Rather
+than listing the directory's contents, it looks for a DirectoryIndex file — by
+default `index.html` — and serves that. So `/thinklab/` resolves to
+`/thinklab/index.html`. The second URL just names that same file explicitly.
+One file on disk, two routes to it, byte-identical responses.
+
+(Asking for `/thinklab` with no trailing slash gets you a `301` redirect to
+`/thinklab/` first, so that relative links inside the page resolve against the
+right directory.)
+
+**Why two files called `index.html` don't collide.** Filenames only have to be
+unique *within* a directory. `~/public_html/index.html` and
+`~/public_html/thinklab/index.html` are two different paths, so they are two
+different files that happen to share a basename — exactly like having a
+`README.md` in several folders of a project. Each is the DirectoryIndex for the
+directory that contains it, so each is the default page of its own level:
+the first answers `/~abhiram/`, the second answers `/~abhiram/thinklab/`.
+
+**One consequence worth noting.** Because `thinklab/index.html` sits one level
+deeper, its links to shared files need `../` in front: `../style.css`,
+`../index.html`. A relative URL is resolved against the directory of the page
+it appears in, not against the site root.
 
 ---
 

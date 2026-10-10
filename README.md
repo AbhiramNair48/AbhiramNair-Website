@@ -12,8 +12,16 @@ site/
 ├── projects.html   Selected software and embedded systems projects
 ├── resume.html     Education, skills, experience, awards, leadership
 ├── style.css       Shared stylesheet
-└── main.js         Light/dark toggle and runtime email assembly
+├── main.js         Light/dark toggle and runtime email assembly
+└── thinklab/
+    └── index.html  Think Faire topic (Robotics) and three presentation proposals
 ```
+
+`thinklab/` is deployed as a subdirectory of `public_html`, so it is served at
+`/~abhiram/thinklab/`. Its page reaches the shared stylesheet and script with
+`../`, since relative URLs resolve against the directory of the page that
+contains them. See [DEPLOY.md](DEPLOY.md#how-a-files-location-becomes-its-url)
+for how a path on disk turns into a URL.
 
 Plain HTML, CSS, and a little vanilla JavaScript. No build step, no frameworks,
 no CDN requests — every asset is served from `public_html`, so the pages work on

@@ -519,6 +519,20 @@ section + section { border-top: 1px solid var(--border); }
   align-self: flex-start;
 }
 
+/* --- Callout ------------------------------------------------------------ */
+.callout {
+  max-width: var(--readw);
+  padding: 1.1rem 1.3rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.callout strong { color: var(--text); font-weight: 620; }
+.callout :last-child { margin-bottom: 0; }
+
 /* --- Skills ------------------------------------------------------------- */
 .skills { display: grid; gap: 1.25rem; }
 

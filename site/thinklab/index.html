@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Think Faire: Robotics &mdash; Abhiram Nair</title>
+<meta name="description" content="Abhiram Nair's Think Faire topic, Robotics, with three proposed presentations on real-world applications of robotics.">
+<meta name="author" content="Abhiram Nair">
+<!-- This page lives one directory deeper than the rest of the site, so every
+     shared asset and sibling page is reached with a leading ../ -->
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23bf5700'/><text x='16' y='22' font-family='Helvetica,Arial,sans-serif' font-size='15' font-weight='bold' fill='white' text-anchor='middle'>AN</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark" aria-hidden="true">AN</span>
+      <span>Abhiram Nair</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../resume.html">Resume</a>
+      <a href="index.html" aria-current="page">Think Faire</a>
+      <button class="theme-toggle" type="button" hidden aria-label="Switch theme"></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">CS 109 &middot; Think Faire</span>
+      <h1>Think Faire: Robotics</h1>
+      <p class="lead">
+        My assigned Think Faire topic is <strong>robotics</strong>. Below are three
+        proposed presentations, each taking a different real-world application and
+        asking what the hard computer science problem actually is underneath it.
+      </p>
+      <div class="actions">
+        <a class="btn btn-ghost" href="../index.html">&larr; Back to my homepage</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Framing</span>
+        <h2>The angle I want to take</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Most robotics demos are sold on the hardware &mdash; the arm, the gripper, the
+          drone. I would rather spend the presentation on the part you cannot photograph.
+          In every application below, the mechanical problem was solved years before the
+          system worked, and what held it back was software: a control loop that had to
+          close fast enough, a planner that deadlocked at scale, a perception model that
+          failed in bad light.
+        </p>
+        <p>
+          That framing also fits the format. A Pecha Kucha gives you twenty seconds a slide
+          and no time to recover from a tangent, so each of these is built around a single
+          question with a concrete answer rather than a survey of a field.
+        </p>
+      </div>
+      <p class="callout" style="margin-top:1.5rem">
+        <strong>Format note.</strong> Pecha Kucha is 20 slides advancing automatically every
+        20 seconds &mdash; 6 minutes 40 seconds total. Each outline below is scoped to that
+        budget, with a rough slide split.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Proposals</span>
+        <h2>Three presentation ideas</h2>
+        <p>Three sectors, three different corners of computer science.</p>
+      </div>
+
+      <div class="entries">
+
+        <article class="entry">
+          <div class="entry-when">Idea 01</div>
+          <div class="entry-body">
+            <h3>The Quarter-Second That Decides a Surgery</h3>
+            <span class="entry-role">Application: robot-assisted and remote surgery</span>
+            <p>
+              <strong>The question:</strong> a surgeon moves their hand and an instrument moves
+              inside a patient. What has to happen in between, and how late is too late?
+            </p>
+            <p>
+              Systems like the da Vinci platform are often described as the surgeon&rsquo;s hands
+              being made steadier. The interesting claim is narrower: the whole system is a
+              real-time control loop with a latency budget, and that budget is what decides
+              whether surgery can happen over a distance at all. Past roughly 200&nbsp;ms of
+              round-trip delay, surgeons start to overcorrect, because the feedback they are
+              reacting to describes a world that has already moved on. That is not a
+              mechanical limit or a bandwidth limit &mdash; it is the speed of light through
+              fibre plus every queue and scheduler on the path.
+            </p>
+            <p><strong>What the presentation would show:</strong></p>
+            <ul>
+              <li>Slides 1&ndash;4: follow one hand movement through the stack &mdash; sensing, filtering, transmission, actuation, haptic return.</li>
+              <li>Slides 5&ndash;10: where the milliseconds go, and why a general-purpose OS is a problem when a deadline missed is not just slow but wrong.</li>
+              <li>Slides 11&ndash;16: the 2019 transatlantic and 5G remote-surgery demonstrations, and what the distance limit really is.</li>
+              <li>Slides 17&ndash;20: what this buys &mdash; specialist surgery reaching hospitals that have no specialist &mdash; and the failure modes that follow when the link drops mid-procedure.</li>
+            </ul>
+            <ul class="tags">
+              <li>Real-time systems</li><li>Control loops</li>
+              <li>Networking</li><li>Safety-critical software</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-when">Idea 02</div>
+          <div class="entry-body">
+            <h3>A Thousand Robots, One Floor, No Collisions</h3>
+            <span class="entry-role">Application: warehouse fulfillment and logistics</span>
+            <p>
+              <strong>The question:</strong> shortest-path routing for one robot is a solved
+              first-year exercise. Why does running it on a thousand robots at once bring the
+              whole warehouse to a halt?
+            </p>
+            <p>
+              This is the idea I find most genuinely surprising, because the failure is so
+              counter-intuitive. Give every robot the individually optimal route and they will
+              converge on the same corridors and deadlock &mdash; each one waiting on a square
+              the next one is waiting to leave. The problem is not path-finding, it is
+              multi-agent path-finding, and it is combinatorially harder: optimal solutions are
+              NP-hard, so real warehouses use reservation tables, time-indexed grids, and
+              conflict-based search to buy a good-enough answer inside a deadline. It is a
+              clean demonstration that a correct algorithm can still be the wrong algorithm.
+            </p>
+            <p><strong>What the presentation would show:</strong></p>
+            <ul>
+              <li>Slides 1&ndash;4: the floor as a graph; one robot, A*, no difficulty.</li>
+              <li>Slides 5&ndash;9: an animated deadlock &mdash; everyone individually optimal, collectively stuck.</li>
+              <li>Slides 10&ndash;15: reserving space <em>and time</em>; conflict-based search; why the industry accepts suboptimal routes to get an answer in time.</li>
+              <li>Slides 16&ndash;20: what it costs &mdash; throughput, warehouse jobs that changed shape, and what happens to the humans still walking that floor.</li>
+            </ul>
+            <ul class="tags">
+              <li>Multi-agent planning</li><li>Graph algorithms</li>
+              <li>Scheduling</li><li>Complexity</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-when">Idea 03</div>
+          <div class="entry-body">
+            <h3>Teaching a Machine to Tell a Weed From a Seedling</h3>
+            <span class="entry-role">Application: agricultural robotics</span>
+            <p>
+              <strong>The question:</strong> a weeding robot has about 50&nbsp;ms to decide
+              whether the green thing under it is a crop or a weed, outdoors, in changing light,
+              on hardware it can carry. What makes that so much harder than a benchmark?
+            </p>
+            <p>
+              Machines like the Carbon Robotics laser weeder kill weeds without herbicide, which
+              matters: agriculture applies hundreds of millions of pounds of it a year, and
+              resistance keeps rising. But the computer vision here gets none of the conditions
+              a benchmark dataset assumes. Lighting shifts hour to hour, plants occlude each
+              other, a weed and a seedling of the same species can be near-identical at the
+              stage you need to act, and inference runs on an embedded board rather than a
+              datacentre GPU. The asymmetry is the heart of it: a missed weed costs almost
+              nothing, a false positive destroys a plant the farmer paid for. I would use this
+              to make the point that a model&rsquo;s accuracy number is close to meaningless
+              until you know what each kind of error costs.
+            </p>
+            <p><strong>What the presentation would show:</strong></p>
+            <ul>
+              <li>Slides 1&ndash;4: the scale of herbicide use, and what a mechanical alternative has to beat.</li>
+              <li>Slides 5&ndash;10: why field images break models that score well on clean data.</li>
+              <li>Slides 11&ndash;15: the latency and power budget of inference on a moving vehicle &mdash; a problem I have touched on a much smaller scale with Raspberry Pi projects.</li>
+              <li>Slides 16&ndash;20: asymmetric error costs, and who gets access to a machine that expensive.</li>
+            </ul>
+            <ul class="tags">
+              <li>Computer vision</li><li>Edge inference</li>
+              <li>Embedded systems</li><li>ML evaluation</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">If I had to choose</span>
+        <h2>My ranking</h2>
+      </div>
+      <div class="prose">
+        <p>
+          <strong>Idea 02</strong> is the one I would push for. It has a single idea that lands
+          in one slide &mdash; everybody optimal, everybody stuck &mdash; it animates well under
+          a twenty-second clock, and it needs no domain knowledge the audience doesn&rsquo;t
+          already have from a first algorithms course.
+        </p>
+        <p>
+          <strong>Idea 03</strong> is the one I am most personally interested in, since it
+          overlaps with the embedded work I have done. <strong>Idea 01</strong> has the
+          strongest hook but the most ground to cover, and it is the easiest of the three to
+          run out of time on.
+        </p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="../index.html">&larr; Back to my homepage</a>
+        <a class="btn btn-ghost" href="../projects.html">My projects</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../resume.html">Resume</a>
+        <a href="index.html">Think Faire</a>
+        <a href="https://github.com/AbhiramNair48" rel="me noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/abhiram-nair-656b05310/" rel="me noopener">LinkedIn</a>
+      </div>
+      <p class="footer-note">&copy; 2026 Abhiram Nair &middot; Hosted on the UTCS web server</p>
+    </div>
+    <p class="footer-note">Last updated October 2026</p>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
